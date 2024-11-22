@@ -1,11 +1,11 @@
 {
-  "name": "upasana_portfolio",
-  "version": "0.0.1",
-  "homepage": "upasana.ovh/",
+  "name": "upasana-portfolio",
+  "version": "4.0.0",
+  "homepage": "https://upasana.ovh/",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/upasana-crypto/upasana_portfolio.git"
+    "url": "https://github.com/upasana-crypto/upasana-portfolio"
   },
   "engines": {
     "node": ">=16.x"

@@ -10,7 +10,7 @@ import { faEnvelope } from '@fortawesome/free-regular-svg-icons/faEnvelope';
 
 const data = [
   {
-    link: 'https://github.com/mldangelo',
+    link: 'https://github.com/upasana-crypto',
     label: 'Github',
     icon: faGithub,
   },
@@ -20,17 +20,17 @@ const data = [
     icon: faFacebookF,
   },
   {
-    link: 'https://www.instagram.com/dangelosaurus/',
+    link: 'https://www.instagram.com/upasanachak/',
     label: 'Instagram',
     icon: faInstagram,
   },
   {
-    link: 'https://www.linkedin.com/in/michaelldangelo',
+    link: 'https://www.linkedin.com/in/upasana-chakrab/',
     label: 'LinkedIn',
     icon: faLinkedinIn,
   },
   {
-    link: 'https://angel.co/Chakraborty-d-angelo',
+    link: 'https://angel.co/uchakrabo',
     label: 'Angel List',
     icon: faAngellist,
   },
@@ -40,7 +40,7 @@ const data = [
     icon: faTwitter,
   },
   {
-    link: 'mailto:Chakraborty.l.dangelo@gmail.com',
+    link: 'mailto:upasana.chakraborty96@gmail.com',
     label: 'Email',
     icon: faEnvelope,
   },

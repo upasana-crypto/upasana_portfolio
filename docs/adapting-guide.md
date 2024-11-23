@@ -13,8 +13,8 @@ You may wish to fork this repository or remove my remote origin and add your own
 
 ### Setup
 
-1. Run the project before making any modifications by following the set up and running instructions in the main [README.md](https://github.com/mldangelo/personal-site#set-up).
-1. Change `homepage` in `package.json` to reflect where you plan to host the site. This is important for static exporting via react-snap. This also changes your path when developing locally. For example, a homepage of `mldangelo.com` places the site at `localhost:3000` and a homepage of `https://mldangelo.github.io/personal-site/` places the site at `localhost:3000/personal-site/`. If you plan to host at on a path such as `https://[your-github-username].github.io/[your-repo-name]`, you should set this now so that your development environment mirrors your production environment.
+1. Run the project before making any modifications by following the set up and running instructions in the main [README.md](https://github.com/mldangelo/upasana_portfolio#set-up).
+1. Change `homepage` in `package.json` to reflect where you plan to host the site. This is important for static exporting via react-snap. This also changes your path when developing locally. For example, a homepage of `mldangelo.com` places the site at `localhost:3000` and a homepage of `https://mldangelo.github.io/upasana_portfolio/` places the site at `localhost:3000/upasana_portfolio/`. If you plan to host at on a path such as `https://[your-github-username].github.io/[your-repo-name]`, you should set this now so that your development environment mirrors your production environment.
 1. Create a `.env` file. To do this, run:
 
    ```bash
@@ -37,7 +37,7 @@ I recommend keeping the project running as you go (with `npm start`) to help cor
 
 ### Deploy
 
-See deployment instructions [here](https://github.com/mldangelo/personal-site#deploying-to-github-pages). If you plan to use a custom url, modify `public/CNAME` and enter your URL. You can run:
+See deployment instructions [here](https://github.com/mldangelo/upasana_portfolio#deploying-to-github-pages). If you plan to use a custom url, modify `public/CNAME` and enter your URL. You can run:
 
 ```bash
 echo "[your-custom-domain][.com]" > public/CNAME
@@ -63,7 +63,7 @@ Here are answers to questions I've been asked at least twice. I've attempted to 
 
 2. LF / CRLF issues with eslint.
 
-   This is a common Windows development pitfall. See @[FrozenFury](https://github.com/FrozenFury)'s [comment](https://github.com/mldangelo/personal-site/issues/263#issuecomment-759216299) for how to update your eslint config to resolve this issue.
+   This is a common Windows development pitfall. See @[FrozenFury](https://github.com/FrozenFury)'s [comment](https://github.com/mldangelo/upasana_portfolio/issues/263#issuecomment-759216299) for how to update your eslint config to resolve this issue.
 
 3. master / main
 

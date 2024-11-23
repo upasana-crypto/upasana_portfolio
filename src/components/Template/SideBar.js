@@ -48,7 +48,7 @@ const SideBar = () => (
     <section id="footer">
       <ContactIcons />
       <p className="copyright">
-        &copy; Upasana Chakrabortyapos;Chakraborty <Link to="/">mldangelo.com</Link>.
+        &copy; Upasana Chakrabortyapos;Chakraborty <Link to="/">upasana.ovh</Link>.
       </p>
     </section>
   </section>

@@ -30,7 +30,7 @@ const data = [
     icon: faLinkedinIn,
   },
   {
-    link: 'https://angel.co/michael-d-angelo',
+    link: 'https://angel.co/Chakraborty-d-angelo',
     label: 'Angel List',
     icon: faAngellist,
   },
@@ -40,7 +40,7 @@ const data = [
     icon: faTwitter,
   },
   {
-    link: 'mailto:michael.l.dangelo@gmail.com',
+    link: 'mailto:Chakraborty.l.dangelo@gmail.com',
     label: 'Email',
     icon: faEnvelope,
   },

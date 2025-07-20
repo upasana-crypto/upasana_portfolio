@@ -1,5 +1,6 @@
 // storage-adapter-import-placeholder
 import { mongooseAdapter } from '@payloadcms/db-mongodb'
+import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob' // Import the Vercel Blob Storage plugin
 
 import sharp from 'sharp' // sharp-import
 import path from 'path'
@@ -71,7 +72,7 @@ export default buildConfig({
   collections: [
     Pages,
     Posts,
-    Media,
+    Media, // Ensure Media collection is included here
     Categories,
     Users,
     // --- ADD YOUR NEW COLLECTION HERE ---
@@ -87,6 +88,23 @@ export default buildConfig({
   plugins: [
     ...plugins,
     // storage-adapter-placeholder
+    // Configure Vercel Blob Storage
+    vercelBlobStorage({
+      enabled: true, // Enable the plugin
+      collections: {
+        // Specify which collections should use Vercel Blob
+        // The slug 'media' must match the slug of your Media collection
+        media: true,
+        // If you had a 'MediaWithPrefix' collection, you would configure it like this:
+        // 'media-with-prefix': {
+        //   prefix: 'my-prefix',
+        // },
+      },
+      // Token provided by Vercel once Blob storage is added to your Vercel project
+      token: process.env.BLOB_READ_WRITE_TOKEN,
+      // Do uploads directly on the client to bypass limits on Vercel serverless functions
+      clientUploads: true,
+    }),
   ],
   secret: process.env.PAYLOAD_SECRET,
   sharp,

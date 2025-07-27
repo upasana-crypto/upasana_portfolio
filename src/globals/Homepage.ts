@@ -44,6 +44,23 @@ export const Homepage: GlobalConfig = {
           'Hex code (e.g., #FFFFFF) or Tailwind class (e.g., text-white) for fallback/default text color.',
       },
     },
+    // ✅ Global font settings
+    {
+      name: 'fontFamily',
+      type: 'text',
+      label: 'Global Font Family',
+      admin: {
+        description: 'Applies to main title and description (e.g., serif, Arial, "Open Sans", etc.)',
+      },
+    },
+    {
+      name: 'fontSize',
+      type: 'text',
+      label: 'Global Font Size',
+      admin: {
+        description: 'CSS font size (e.g., 1.5rem, 24px) used for main title and description',
+      },
+    },
     {
       name: 'sections',
       type: 'array',
@@ -95,6 +112,23 @@ export const Homepage: GlobalConfig = {
           label: 'Section Icon (Optional)',
           admin: {
             description: 'Upload an SVG or PNG icon for this section.',
+          },
+        },
+        // ✅ Per-section font settings
+        {
+          name: 'fontFamily',
+          type: 'text',
+          label: 'Section Font Family',
+          admin: {
+            description: 'Optional. Font family for this section (e.g., serif, Arial)',
+          },
+        },
+        {
+          name: 'fontSize',
+          type: 'text',
+          label: 'Section Font Size',
+          admin: {
+            description: 'Optional. Font size for section title and links (e.g., 1.25rem)',
           },
         },
         {

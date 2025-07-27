@@ -1627,6 +1627,7 @@ export interface Homepage {
   textColor: string;
   sections?:
     | {
+        fontFamily: undefined;
         sectionTitle: string;
         /**
          * Hex code or Tailwind class (e.g., #FF7F50, bg-blue-700)

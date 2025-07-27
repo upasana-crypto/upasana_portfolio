@@ -58,9 +58,9 @@ export default async function HomePage() {
       {/* Foreground content */}
       <div className="relative z-10">
         <Gutter className="py-24 text-center max-w-7xl mx-auto px-4">
-          <h1 className="text-6xl font-extrabold mb-4 font-[serif] italic">{mainTitle}</h1>
+          <h1 className="text-4xl font-extrabold mb-4 font-[sans-serif] italic">{mainTitle}</h1>
           {mainDescription && (
-            <p className="text-xl max-w-3xl mx-auto mb-16 leading-relaxed font-serif">
+            <p className="text-xl max-w-2xl mx-auto mb-16 leading-relaxed font-[sans-serif]">
               {mainDescription}
             </p>
           )}
@@ -93,7 +93,7 @@ export default async function HomePage() {
                     w-full md:w-96 h-96 cursor-pointer border border-gray-300 dark:border-gray-700 ${textColorClass}`}
                 >
                   <h2
-                    className="text-4xl font-bold mb-4 font-[serif] italic"
+                    className="text-3xl font-bold mb-4 font-[sans-serif] italic"
                     style={{ color: section.textColor }}
                   >
                     {section.sectionTitle}

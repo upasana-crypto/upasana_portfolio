@@ -57,8 +57,9 @@ export default async function HomePage() {
 
       {/* Foreground content */}
       <div className="relative z-10 h-full">
-        <Gutter className="py-12 max-w-7xl mx-auto px-4 h-full">
-          <div className="flex flex-col md:flex-row md:justify-between md:items-start gap-8 h-full">
+        {/* MODIFIED: Added flex, items-center (optional, but good practice), and justify-center to the Gutter */}
+        <Gutter className="py-10 max-w-7xl mx-auto px-4 h-full flex flex-col justify-center">
+          <div className="flex flex-col md:flex-row md:justify-between md:items-start gap-8 w-full">
             {/* ⬅️ Left Column: Main Title and Description */}
             <div className="md:w-1/2 text-center md:text-left flex flex-col justify-start md:h-full">
               <h1 className="text-3xl lg:text-4xl font-extrabold mb-3 font-[sans-serif] italic">
@@ -71,8 +72,8 @@ export default async function HomePage() {
               )}
             </div>
 
-            {/* ➡️ Right Column: Stacked Sections */}
-            <div className="md:w-1/2 flex flex-col gap-6 md:h-[calc(100vh-8rem)] md:max-h-[calc(100vh-8rem)] md:overflow-y-auto md:pr-4">
+            {/* ➡️ Right Column: Grid of Sections (2-up) */}
+            <div className="md:w-1/2 flex flex-row flex-wrap justify-center gap-4 md:h-[calc(100vh-7.5rem)] md:max-h-[calc(100vh-7.5rem)] md:min-h-0 md:overflow-y-auto md:pr-4">
               {sections?.map((section, index) => {
                 const iconUrl =
                   typeof section.icon === 'object' && section.icon !== null ? section.icon.url : ''
@@ -93,8 +94,8 @@ export default async function HomePage() {
                   <div
                     key={index}
                     // ✅ SECTION IMAGE IS THE BACKGROUND HERE
-                    className={`relative flex flex-col items-center justify-start p-6 rounded-xl shadow-2xl transition-transform duration-300 hover:scale-[1.02]
-                      w-full cursor-pointer border border-gray-300 dark:border-gray-700 ${textColorClass}`}
+                    className={`relative flex flex-col items-center justify-start p-5 rounded-xl shadow-2xl transition-transform duration-300 hover:scale-[1.02]
+                      w-full sm:w-[calc(50%-0.5rem)] md:w-[calc(50%-0.5rem)] cursor-pointer border border-gray-300 dark:border-gray-700 ${textColorClass}`}
                     style={{
                       backgroundImage: sectionBackgroundUrl
                         ? `url(${sectionBackgroundUrl})`
@@ -112,13 +113,14 @@ export default async function HomePage() {
                     {/* Content container to ensure text/icon is above the background/overlay */}
                     <div className="relative z-10 flex flex-col items-center justify-start w-full">
                       <h2
-                        className="text-2xl font-bold mb-3 font-[sans-serif] italic text-center"
+                        className="text-2xl font-bold mb-2 font-[sans-serif] italic text-center"
                         style={{ color: section.textColor }}
                       >
                         {section.sectionTitle}
                       </h2>
 
-                      {/* Note: The main 'icon' image is still displayed separately on top of the background image */}
+                      {/* Icon image is intentionally removed/commented out to reduce vertical space */}
+
                       <Image
                         src={iconUrl || '/default-icon.png'}
                         alt={`${section.sectionTitle} icon`}

@@ -56,12 +56,15 @@ export default async function HomePage() {
       <div className="absolute inset-0 bg-black/50 z-0" />
 
       {/* Foreground content */}
-      <div className="relative z-10 h-full">
-        {/* MODIFIED: Added flex, items-center (optional, but good practice), and justify-center to the Gutter */}
+      {/* IMPORTANT: Ensure this container fills the height of the screen */}
+      <div className="relative z-10 h-screen">
+        {/* RE-APPLYING CENTER ALIGNMENT: Gutter now centers the content block vertically */}
         <Gutter className="py-10 max-w-7xl mx-auto px-4 h-full flex flex-col justify-center">
-          <div className="flex flex-col md:flex-row md:justify-between md:items-start gap-8 w-full">
+          {/* Main two-column wrapper */}
+          <div className="flex flex-col md:flex-row md:justify-between md:items-end gap-8 w-full">
             {/* ⬅️ Left Column: Main Title and Description */}
-            <div className="md:w-1/2 text-center md:text-left flex flex-col justify-start md:h-full">
+            {/* Using justify-end anchors the text within the left column to the bottom */}
+            <div className="md:w-1/2 text-center md:text-left flex flex-col justify-end md:h-full">
               <h1 className="text-3xl lg:text-4xl font-extrabold mb-3 font-[sans-serif] italic">
                 {mainTitle}
               </h1>
@@ -73,7 +76,8 @@ export default async function HomePage() {
             </div>
 
             {/* ➡️ Right Column: Grid of Sections (2-up) */}
-            <div className="md:w-1/2 flex flex-row flex-wrap justify-center gap-4 md:h-[calc(100vh-7.5rem)] md:max-h-[calc(100vh-7.5rem)] md:min-h-0 md:overflow-y-auto md:pr-4">
+            {/* Content-sized container */}
+            <div className="md:w-1/2 flex flex-row flex-wrap justify-center gap-4 md:pr-4">
               {sections?.map((section, index) => {
                 const iconUrl =
                   typeof section.icon === 'object' && section.icon !== null ? section.icon.url : ''

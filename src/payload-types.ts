@@ -1625,9 +1625,16 @@ export interface Homepage {
    * Hex code (e.g., #FFFFFF) or Tailwind class (e.g., text-white) for fallback/default text color.
    */
   textColor: string;
+  /**
+   * Applies to main title and description (e.g., serif, Arial, "Open Sans", etc.)
+   */
+  fontFamily?: string | null;
+  /**
+   * CSS font size (e.g., 1.5rem, 24px) used for main title and description
+   */
+  fontSize?: string | null;
   sections?:
     | {
-        fontFamily: undefined;
         sectionTitle: string;
         /**
          * Hex code or Tailwind class (e.g., #FF7F50, bg-blue-700)
@@ -1645,6 +1652,14 @@ export interface Homepage {
          * Upload an SVG or PNG icon for this section.
          */
         icon?: (string | null) | Media;
+        /**
+         * Optional. Font family for this section (e.g., serif, Arial)
+         */
+        fontFamily?: string | null;
+        /**
+         * Optional. Font size for section title and links (e.g., 1.25rem)
+         */
+        fontSize?: string | null;
         links?:
           | {
               label: string;
@@ -1723,6 +1738,8 @@ export interface HomepageSelect<T extends boolean = true> {
   mainDescription?: T;
   backgroundImage?: T;
   textColor?: T;
+  fontFamily?: T;
+  fontSize?: T;
   sections?:
     | T
     | {
@@ -1731,6 +1748,8 @@ export interface HomepageSelect<T extends boolean = true> {
         textColor?: T;
         backgroundImage?: T;
         icon?: T;
+        fontFamily?: T;
+        fontSize?: T;
         links?:
           | T
           | {

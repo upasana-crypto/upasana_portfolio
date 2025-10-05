@@ -44,7 +44,8 @@ export default async function HomePage() {
 
   return (
     <div
-      className="min-h-screen w-full relative overflow-hidden"
+      // 1. Allows scrolling when content exceeds the viewport height (e.g., on mobile)
+      className="min-h-screen w-full relative overflow-y-auto"
       style={{
         backgroundImage: backgroundUrl ? `url(${backgroundUrl})` : undefined,
         backgroundSize: 'cover',
@@ -55,17 +56,17 @@ export default async function HomePage() {
       {/* Optional dark overlay for better contrast */}
       <div className="absolute inset-0 bg-black/50 z-0" />
 
-      {/* Foreground content */}
-      {/* IMPORTANT: Ensure this container fills the height of the screen */}
-      <div className="relative z-10 h-screen">
-        {/* RE-APPLYING CENTER ALIGNMENT: Gutter now centers the content block vertically */}
+      {/* Foreground content. Use h-full to inherit height from min-h-screen */}
+      <div className="relative z-10 h-full">
+        {/* 2. Vertically centers the content block within the viewport */}
         <Gutter className="py-10 max-w-7xl mx-auto px-4 h-full flex flex-col justify-center">
-          {/* Main two-column wrapper */}
-          <div className="flex flex-col md:flex-row md:justify-between md:items-end gap-8 w-full">
+          {/* 3. Main two-column wrapper. Use h-full to take up the full available Gutter space */}
+          <div className="flex flex-col md:flex-row md:justify-between md:items-end gap-8 w-full h-full">
             {/* ⬅️ Left Column: Main Title and Description */}
-            {/* Using justify-end anchors the text within the left column to the bottom */}
-            <div className="md:w-1/2 text-center md:text-left flex flex-col justify-end md:h-full">
-              <h1 className="text-3xl lg:text-4xl font-extrabold mb-3 font-[sans-serif] italic">
+            {/* Removed justify-end here as mt-auto handles it. Keeping md:h-full is vital. */}
+            <div className="md:w-1/2 text-center md:text-left flex flex-col md:h-full">
+              {/* FIX APPLIED: Added mt-auto to push this content block to the bottom of the flex column */}
+              <h1 className="text-3xl lg:text-4xl font-extrabold mb-3 font-[sans-serif] italic mt-auto">
                 {mainTitle}
               </h1>
               {mainDescription && (
@@ -76,7 +77,6 @@ export default async function HomePage() {
             </div>
 
             {/* ➡️ Right Column: Grid of Sections (2-up) */}
-            {/* Content-sized container */}
             <div className="md:w-1/2 flex flex-row flex-wrap justify-center gap-4 md:pr-4">
               {sections?.map((section, index) => {
                 const iconUrl =
@@ -122,8 +122,6 @@ export default async function HomePage() {
                       >
                         {section.sectionTitle}
                       </h2>
-
-                      {/* Icon image is intentionally removed/commented out to reduce vertical space */}
 
                       <Image
                         src={iconUrl || '/default-icon.png'}

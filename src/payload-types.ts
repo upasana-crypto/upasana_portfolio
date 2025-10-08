@@ -193,7 +193,7 @@ export interface Page {
       | null;
     media?: (string | null) | Media;
   };
-  layout: (CallToActionBlock | ContentBlock | MediaBlock | ArchiveBlock | FormBlock)[];
+  layout: (CallToActionBlock | ContentBlock | MediaBlock | ArchiveBlock | FormBlock | OwnContentMatrixBlock)[];
   meta?: {
     title?: string | null;
     /**
@@ -738,6 +738,77 @@ export interface Form {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "OwnContentMatrixBlock".
+ */
+export interface OwnContentMatrixBlock {
+  rows?:
+    | {
+        /**
+         * Optional: Title for this row (only visible in Admin).
+         */
+        rowTitle?: string | null;
+        backgroundStyle?: ('none' | 'light-gray' | 'dark-blue') | null;
+        columns?:
+          | {
+              size?: ('12' | '8' | '6' | '4' | '3') | null;
+              contentElements?: (RichtextElement | MediaElement | LinkElement)[] | null;
+              id?: string | null;
+            }[]
+          | null;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'own-content-matrix';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "RichtextElement".
+ */
+export interface RichtextElement {
+  richText?: {
+    root: {
+      type: string;
+      children: {
+        type: string;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'richtext-element';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "MediaElement".
+ */
+export interface MediaElement {
+  media: string | Media;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'media-element';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "LinkElement".
+ */
+export interface LinkElement {
+  linkText: string;
+  linkURL: string;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'link-element';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "redirects".
  */
 export interface Redirect {
@@ -1027,6 +1098,7 @@ export interface PagesSelect<T extends boolean = true> {
         mediaBlock?: T | MediaBlockSelect<T>;
         archive?: T | ArchiveBlockSelect<T>;
         formBlock?: T | FormBlockSelect<T>;
+        'own-content-matrix'?: T | OwnContentMatrixBlockSelect<T>;
       };
   meta?:
     | T
@@ -1123,6 +1195,62 @@ export interface FormBlockSelect<T extends boolean = true> {
   form?: T;
   enableIntro?: T;
   introContent?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "OwnContentMatrixBlock_select".
+ */
+export interface OwnContentMatrixBlockSelect<T extends boolean = true> {
+  rows?:
+    | T
+    | {
+        rowTitle?: T;
+        backgroundStyle?: T;
+        columns?:
+          | T
+          | {
+              size?: T;
+              contentElements?:
+                | T
+                | {
+                    'richtext-element'?: T | RichtextElementSelect<T>;
+                    'media-element'?: T | MediaElementSelect<T>;
+                    'link-element'?: T | LinkElementSelect<T>;
+                  };
+              id?: T;
+            };
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "RichtextElement_select".
+ */
+export interface RichtextElementSelect<T extends boolean = true> {
+  richText?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "MediaElement_select".
+ */
+export interface MediaElementSelect<T extends boolean = true> {
+  media?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "LinkElement_select".
+ */
+export interface LinkElementSelect<T extends boolean = true> {
+  linkText?: T;
+  linkURL?: T;
   id?: T;
   blockName?: T;
 }

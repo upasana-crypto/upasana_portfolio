@@ -1,7 +1,8 @@
 // storage-adapter-import-placeholder
 import { mongooseAdapter } from '@payloadcms/db-mongodb'
 import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob' // Import the Vercel Blob Storage plugin
-
+import { nodemailerAdapter } from '@payloadcms/email-nodemailer'
+import { resendAdapter } from '@payloadcms/email-resend'
 import sharp from 'sharp' // sharp-import
 import path from 'path'
 import { buildConfig, PayloadRequest } from 'payload'
@@ -126,4 +127,10 @@ export default buildConfig({
     },
     tasks: [],
   },
+  //added email options
+  email: resendAdapter({
+    apiKey: process.env.RESEND_API_KEY ?? '',
+    defaultFromAddress: process.env.PUBLIC_EMAIL_FROM_ADDRESS ?? 'noreply@example.com', // Use a fallback
+    defaultFromName: process.env.PUBLIC_EMAIL_FROM_NAME ?? 'Payload CMS',
+  }),
 })

@@ -77,6 +77,14 @@ export const Media: CollectionConfig = {
         name: 'small',
         width: 600,
       },
+      // ✅ MODIFICATION: ADD THE MISSING 'tile' SIZE HERE
+      {
+        name: 'tile',
+        width: 100, // Small size is ideal for repeating background
+        height: 100,
+        crop: 'center',
+      },
+      // END MODIFICATION
       {
         name: 'medium',
         width: 900,

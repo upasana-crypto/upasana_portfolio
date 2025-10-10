@@ -1,3 +1,5 @@
+// payload.config.ts
+
 // storage-adapter-import-placeholder
 import { mongooseAdapter } from '@payloadcms/db-mongodb'
 import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob' // Import the Vercel Blob Storage plugin
@@ -30,7 +32,25 @@ const dirname = path.dirname(filename)
 
 export default buildConfig({
   admin: {
+    // 🎯 ADDED: Meta configuration to change the browser tab title
+    meta: {
+      // This text will be appended to the page title in the browser tab
+      // Example: "Dashboard — Upasana Portfolio Admin"
+      titleSuffix: '— Upasana Portfolio Admin',
+    },
+    // 🎯 ADDED: End of Meta configuration
+
     components: {
+      // 🎯 ADDED: Custom Logo and Icon definitions
+      graphics: {
+        // Points to the custom React component for the main logo (login, open sidebar)
+        Logo: 'src/graphics/Logo.tsx',
+
+        // Points to the custom React component for the small icon (collapsed sidebar)
+        Icon: 'src/graphics/Icon.tsx',
+      },
+      // 🎯 MODIFICATION END
+
       // The `BeforeLogin` component renders a message that you see while logging into your admin panel.
       // Feel to delete this at any time. Simply remove the line below.
       beforeLogin: ['@/components/BeforeLogin'],

@@ -44,7 +44,19 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 }
 
 export const metadata: Metadata = {
-  metadataBase: new URL(getServerSideURL()),
+  metadataBase: new URL(getServerSideURL('/')),
+
+  // 🛑 MODIFICATION START: Define title template to override global suffix
+  title: {
+    // This template ensures your title is used, followed by your custom suffix
+    // and eliminates any boilerplate text from the theme.
+    template: '%s — Upasana Chakraborty',
+
+    // This is the title used for pages that don't define their own title (e.g., the root page)
+    default: 'Upasana Chakraborty',
+  },
+  // 🛑 MODIFICATION END
+
   openGraph: mergeOpenGraph(),
   twitter: {
     card: 'summary_large_image',

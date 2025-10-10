@@ -1,6 +1,6 @@
 import canUseDOM from './canUseDOM'
 
-export const getServerSideURL = () => {
+export const getServerSideURL = (p0: string) => {
   let url = process.env.NEXT_PUBLIC_SERVER_URL
 
   if (!url && process.env.VERCEL_PROJECT_PRODUCTION_URL) {

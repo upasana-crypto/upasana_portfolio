@@ -1,13 +1,23 @@
+import type { Metadata } from 'next' // Necessary for generateMetadata
+
 import React from 'react'
 import Image from 'next/image'
 import { getPayloadClient } from '../(payload)/getPayloadClient'
-import { Homepage as HomepageType } from '../../payload-types'
+// Assuming HomepageType now includes the 'meta' group field with SEO data
+import { Homepage as HomepageType, Media } from '../../payload-types'
 import { Gutter } from '@/components/Gutter'
+
+// Import utilities needed for metadata generation
+import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
+import { getServerSideURL } from '@/utilities/getURL'
+
+// --- Async Data Fetching Functions ---
 
 async function getHomepageContent(): Promise<HomepageType | null> {
   try {
     const payload = await getPayloadClient()
 
+    // Ensure depth is sufficient to fetch all related data (media, etc.)
     const homepageData = await payload.findGlobal({
       slug: 'homepage',
       depth: 1,
@@ -19,6 +29,60 @@ async function getHomepageContent(): Promise<HomepageType | null> {
     return null
   }
 }
+
+// Function to fetch content specifically for SEO purposes
+async function getHomepageContentSEO(): Promise<HomepageType | null> {
+  // We reuse the main fetch function since it fetches depth 1 (needed for image)
+  return getHomepageContent()
+}
+
+// --- Next.js Metadata Generation Function ---
+
+export async function generateMetadata(): Promise<Metadata> {
+  const homepageContent = await getHomepageContentSEO()
+  // If 'meta' does not exist on Homepage, fallback to mainTitle/mainDescription directly
+  const meta =
+    homepageContent && 'meta' in homepageContent ? (homepageContent as any).meta : undefined
+
+  // Fallback to main content if dedicated SEO meta fields are empty
+  const title = meta?.title || homepageContent?.mainTitle
+  const description = meta?.description || homepageContent?.mainDescription
+
+  // Safely access the image from the 'meta' group field
+  const imageURL = (meta?.image as Media)?.url
+
+  if (!title && !description && !imageURL) {
+    // Ultimate fallback if nothing is entered
+    return {
+      title: 'Home | Upasana Chakraborty',
+      openGraph: mergeOpenGraph(),
+    }
+  }
+
+  return {
+    title: title || 'Home | Upasana Chakraborty',
+    description: description ?? undefined,
+
+    openGraph: mergeOpenGraph({
+      title: title || 'Home | Upasana Chakraborty',
+      description: description ?? undefined,
+      url: getServerSideURL('/'),
+
+      images: imageURL
+        ? [
+            {
+              url: imageURL,
+              width: 1200, // Standard OG image width
+              height: 630, // Standard OG image height
+              alt: title || 'Homepage Image',
+            },
+          ]
+        : undefined,
+    }),
+  }
+}
+
+// --- Main Page Component ---
 
 export default async function HomePage() {
   const homepageContent = await getHomepageContent()
@@ -134,7 +198,17 @@ export default async function HomePage() {
                       <ul className="text-base space-y-2 w-full max-w-xs">
                         {section.links?.map((link, linkIndex) => {
                           let href = '#'
-                          if (
+                          let target: '_self' | '_blank' = '_self'
+
+                          // Safely extract document URL (assuming 'mediaDocument' is the field name)
+                          const linkedDocument = link.mediaDocument as Media | null
+                          const documentUrl = linkedDocument?.url
+
+                          if (documentUrl) {
+                            // CASE 1: Document Link (CV) - Use the file URL and open in new tab
+                            href = documentUrl
+                            target = '_blank'
+                          } else if (
                             link.linkType === 'internal' &&
                             typeof link.internalPage === 'object' &&
                             typeof link.internalPage?.value === 'object' &&
@@ -151,6 +225,7 @@ export default async function HomePage() {
                             else if (relationTo === 'pages') href = `/${slug}`
                           } else if (link.linkType === 'custom' && link.customUrl) {
                             href = link.customUrl
+                            target = '_blank'
                           }
 
                           return (
@@ -159,8 +234,8 @@ export default async function HomePage() {
                                 href={href}
                                 className="block py-2 px-3 rounded-lg bg-white bg-opacity-20 hover:bg-opacity-30 transition-colors text-center text-lg font-semibold shadow-md"
                                 style={{ color: section.textColor }}
-                                target={link.linkType === 'custom' ? '_blank' : '_self'}
-                                rel={link.linkType === 'custom' ? 'noopener noreferrer' : undefined}
+                                target={target}
+                                rel={target === '_blank' ? 'noopener noreferrer' : undefined}
                               >
                                 {link.label}
                               </a>

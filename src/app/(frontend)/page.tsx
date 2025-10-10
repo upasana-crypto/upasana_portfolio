@@ -3,7 +3,7 @@ import type { Metadata } from 'next' // Necessary for generateMetadata
 import React from 'react'
 import Image from 'next/image'
 import { getPayloadClient } from '../(payload)/getPayloadClient'
-// Assuming HomepageType now includes the 'meta' field
+// Assuming HomepageType now includes the necessary media structure
 import { Homepage as HomepageType, Media } from '../../payload-types'
 import { Gutter } from '@/components/Gutter'
 
@@ -40,24 +40,31 @@ async function getHomepageContentSEO(): Promise<HomepageType | null> {
 
 export async function generateMetadata(): Promise<Metadata> {
   const homepageContent = await getHomepageContentSEO()
-  // If your HomepageType does not have a 'meta' field, use the correct fields directly.
-  // For example, if SEO fields are at the root level:
+
+  // 1. Source title and description from main content fields as a fallback for SEO
   const title = homepageContent?.mainTitle
   const description = homepageContent?.mainDescription
+
+  // 2. Safely source the image from the 'backgroundImage' field for the OG image.
   const imageURL = (homepageContent?.backgroundImage as Media)?.url
 
-  // 🛑 MODIFICATION START: Use explicit title structure
-
-  // This ensures the title is always formatted correctly across all pages using this metadata.
+  // Set pageTitle to main title or a sensible default
   const pageTitle = title || 'Home'
 
+  // If even the main content is missing, use the ultimate fallback.
+  if (!pageTitle && !description && !imageURL) {
+    return {
+      title: 'Upasana Chakraborty',
+      openGraph: mergeOpenGraph(),
+    }
+  }
+
   return {
-    // 🎯 The template applies the suffix to all pages (e.g., "Home — Upasana Chakraborty")
+    // 🎯 Use explicit title structure to apply the name/brand suffix
     title: {
       template: '%s — Upasana Chakraborty',
       default: 'Upasana Chakraborty', // Default title for the root page itself
     },
-    // 🛑 MODIFICATION END
 
     description: description ?? undefined,
 
@@ -198,8 +205,8 @@ export default async function HomePage() {
                           let href = '#'
                           let target: '_self' | '_blank' = '_self'
 
-                          // Safely extract document URL (assuming 'mediaDocument' is the field name)
-                          const linkedDocument = link.mediaDocument as Media | null
+                          // 🛑 MODIFIED: Assuming the field for the document is named 'documentLink'
+                          const linkedDocument = (link as any).documentLink as Media | null
                           const documentUrl = linkedDocument?.url
 
                           if (documentUrl) {
@@ -226,6 +233,9 @@ export default async function HomePage() {
                             target = '_blank'
                           }
 
+                          // Fallback check to use the original link.label which is always present
+                          const linkLabel = (link as any).label || 'Link'
+
                           return (
                             <li key={linkIndex}>
                               <a
@@ -235,7 +245,7 @@ export default async function HomePage() {
                                 target={target}
                                 rel={target === '_blank' ? 'noopener noreferrer' : undefined}
                               >
-                                {link.label}
+                                {linkLabel}
                               </a>
                             </li>
                           )

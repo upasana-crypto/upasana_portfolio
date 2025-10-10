@@ -99,7 +99,7 @@ export default buildConfig({
     // --- ADD YOUR NEW COLLECTION HERE ---
     // Projects, // <--- ADD THIS LINE
   ],
-  cors: [getServerSideURL()].filter(Boolean),
+  cors: [getServerSideURL('/')].filter(Boolean),
   globals: [
     Header,
     Footer,

@@ -19,7 +19,7 @@ const generateTitle: GenerateTitle<Post | Page> = ({ doc }) => {
 }
 
 const generateURL: GenerateURL<Post | Page> = ({ doc }) => {
-  const url = getServerSideURL()
+  const url = getServerSideURL('/')
 
   return doc?.slug ? `${url}/${doc.slug}` : url
 }

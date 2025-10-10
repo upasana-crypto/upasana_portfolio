@@ -3,7 +3,7 @@ import type { Metadata } from 'next' // Necessary for generateMetadata
 import React from 'react'
 import Image from 'next/image'
 import { getPayloadClient } from '../(payload)/getPayloadClient'
-// Assuming HomepageType now includes the 'meta' group field with SEO data
+// Assuming HomepageType now includes the 'meta' field
 import { Homepage as HomepageType, Media } from '../../payload-types'
 import { Gutter } from '@/components/Gutter'
 
@@ -40,31 +40,29 @@ async function getHomepageContentSEO(): Promise<HomepageType | null> {
 
 export async function generateMetadata(): Promise<Metadata> {
   const homepageContent = await getHomepageContentSEO()
-  // If 'meta' does not exist on Homepage, fallback to mainTitle/mainDescription directly
-  const meta =
-    homepageContent && 'meta' in homepageContent ? (homepageContent as any).meta : undefined
+  // If your HomepageType does not have a 'meta' field, use the correct fields directly.
+  // For example, if SEO fields are at the root level:
+  const title = homepageContent?.mainTitle
+  const description = homepageContent?.mainDescription
+  const imageURL = (homepageContent?.backgroundImage as Media)?.url
 
-  // Fallback to main content if dedicated SEO meta fields are empty
-  const title = meta?.title || homepageContent?.mainTitle
-  const description = meta?.description || homepageContent?.mainDescription
+  // 🛑 MODIFICATION START: Use explicit title structure
 
-  // Safely access the image from the 'meta' group field
-  const imageURL = (meta?.image as Media)?.url
-
-  if (!title && !description && !imageURL) {
-    // Ultimate fallback if nothing is entered
-    return {
-      title: 'Home | Upasana Chakraborty',
-      openGraph: mergeOpenGraph(),
-    }
-  }
+  // This ensures the title is always formatted correctly across all pages using this metadata.
+  const pageTitle = title || 'Home'
 
   return {
-    title: title || 'Home | Upasana Chakraborty',
+    // 🎯 The template applies the suffix to all pages (e.g., "Home — Upasana Chakraborty")
+    title: {
+      template: '%s — Upasana Chakraborty',
+      default: 'Upasana Chakraborty', // Default title for the root page itself
+    },
+    // 🛑 MODIFICATION END
+
     description: description ?? undefined,
 
     openGraph: mergeOpenGraph({
-      title: title || 'Home | Upasana Chakraborty',
+      title: pageTitle,
       description: description ?? undefined,
       url: getServerSideURL('/'),
 
@@ -74,7 +72,7 @@ export async function generateMetadata(): Promise<Metadata> {
               url: imageURL,
               width: 1200, // Standard OG image width
               height: 630, // Standard OG image height
-              alt: title || 'Homepage Image',
+              alt: pageTitle || 'Homepage Image',
             },
           ]
         : undefined,

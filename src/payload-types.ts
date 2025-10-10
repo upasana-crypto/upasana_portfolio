@@ -1808,6 +1808,7 @@ export interface Homepage {
         fontSize?: string | null;
         links?:
           | {
+              mediaDocument: Media | null;
               label: string;
               linkType?: ('internal' | 'custom') | null;
               internalPage?:

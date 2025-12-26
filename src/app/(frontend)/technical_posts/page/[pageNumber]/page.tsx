@@ -26,7 +26,7 @@ export default async function Page({ params: paramsPromise }: Args) {
   if (!Number.isInteger(sanitizedPageNumber)) notFound()
 
   const posts = await payload.find({
-    collection: 'posts',
+    collection: 'technical_posts',
     depth: 1,
     limit: 12,
     page: sanitizedPageNumber,
@@ -38,20 +38,20 @@ export default async function Page({ params: paramsPromise }: Args) {
       <PageClient />
       <div className="container mb-16">
         <div className="prose dark:prose-invert max-w-none">
-          <h1>Posts</h1>
+          <h1>Technical Posts</h1>
         </div>
       </div>
 
       <div className="container mb-8">
         <PageRange
-          collection="posts"
+          collection="technical_posts"
           currentPage={posts.page}
           limit={12}
           totalDocs={posts.totalDocs}
         />
       </div>
 
-      <CollectionArchive posts={posts.docs} relationTo="posts" />
+      <CollectionArchive posts={posts.docs} relationTo="technical_posts" />
 
       <div className="container">
         {posts?.page && posts?.totalPages > 1 && (
@@ -65,14 +65,14 @@ export default async function Page({ params: paramsPromise }: Args) {
 export async function generateMetadata({ params: paramsPromise }: Args): Promise<Metadata> {
   const { pageNumber } = await paramsPromise
   return {
-    title: `  Posts Page ${pageNumber || ''}`,
+    title: `  Technical Posts Page ${pageNumber || ''}`,
   }
 }
 
 export async function generateStaticParams() {
   const payload = await getPayload({ config: configPromise })
   const { totalDocs } = await payload.count({
-    collection: 'posts',
+    collection: 'technical_posts',
     overrideAccess: false,
   })
 

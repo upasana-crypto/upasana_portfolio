@@ -228,6 +228,8 @@ export default async function HomePage() {
                                 : undefined
                             if (relationTo === 'posts') href = `/posts/${slug}`
                             else if (relationTo === 'pages') href = `/${slug}`
+                            else if (relationTo === 'technical_posts')
+                              href = `/technical_posts/${slug}`
                           } else if (link.linkType === 'custom' && link.customUrl) {
                             href = link.customUrl
                             target = '_blank'

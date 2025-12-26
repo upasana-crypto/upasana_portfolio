@@ -12,11 +12,21 @@ export const ArchiveBlock: React.FC<
     id?: string
   }
 > = async (props) => {
-  const { id, categories, introContent, limit: limitFromProps, populateBy, selectedDocs } = props
+  // 1. Destructure relationTo from props so we know which collection was chosen in Admin
+  const {
+    id,
+    categories,
+    introContent,
+    limit: limitFromProps,
+    populateBy,
+    selectedDocs,
+    relationTo,
+  } = props
 
   const limit = limitFromProps || 3
 
-  let posts: Post[] = []
+  // Use 'any' here because posts could be from 'posts' or 'technical_posts'
+  let posts: any[] = []
 
   if (populateBy === 'collection') {
     const payload = await getPayload({ config: configPromise })
@@ -27,7 +37,8 @@ export const ArchiveBlock: React.FC<
     })
 
     const fetchedPosts = await payload.find({
-      collection: 'posts',
+      // 2. USE DYNAMIC COLLECTION: fetch from 'posts' or 'technical_posts'
+      collection: relationTo || 'posts',
       depth: 1,
       limit,
       ...(flattenedCategories && flattenedCategories.length > 0
@@ -59,7 +70,8 @@ export const ArchiveBlock: React.FC<
           <RichText className="ms-0 max-w-[48rem]" data={introContent} enableGutter={false} />
         </div>
       )}
-      <CollectionArchive posts={posts} />
+      {/* 3. PASS THE COLLECTION NAME: Tell the archive which collection this is */}
+      <CollectionArchive posts={posts} relationTo={relationTo || 'posts'} />
     </div>
   )
 }

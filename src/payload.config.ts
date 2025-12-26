@@ -14,7 +14,7 @@ import { Categories } from './collections/Categories'
 import { Media } from './collections/Media'
 import { Pages } from './collections/Pages'
 import { Posts } from './collections/Posts'
-import { technical_posts } from './collections/Technical_Posts'
+import { technical_posts } from './collections/technical_posts'
 import { Users } from './collections/Users'
 
 // --- ADD THESE NEW IMPORTS ---

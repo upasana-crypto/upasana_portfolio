@@ -14,6 +14,7 @@ import { Categories } from './collections/Categories'
 import { Media } from './collections/Media'
 import { Pages } from './collections/Pages'
 import { Posts } from './collections/Posts'
+import { technical_posts } from './collections/Technical_Posts'
 import { Users } from './collections/Users'
 
 // --- ADD THESE NEW IMPORTS ---
@@ -95,6 +96,7 @@ export default buildConfig({
     Posts,
     Media, // Ensure Media collection is included here
     Categories,
+    technical_posts,
     Users,
     // --- ADD YOUR NEW COLLECTION HERE ---
     // Projects, // <--- ADD THIS LINE
